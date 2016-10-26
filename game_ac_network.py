@@ -77,11 +77,15 @@ class GameACNetwork(object):
         d = 1.0 / np.sqrt(input_channels)
         initial = tf.random_uniform(shape, minval=-d, maxval=d)
         return tf.Variable(initial)
+        # initial = tf.truncated_normal(shape, stddev=0.01)
+        # return tf.Variable(initial)
 
     def _fc_bias_variable(self, shape, input_channels):
         d = 1.0 / np.sqrt(input_channels)
         initial = tf.random_uniform(shape, minval=-d, maxval=d)
         return tf.Variable(initial)
+        # initial = tf.constant(0.01, shape=shape)
+        # return tf.Variable(initial)
 
     def _conv_weight_variable(self, shape):
         w = shape[0]
@@ -90,14 +94,19 @@ class GameACNetwork(object):
         d = 1.0 / np.sqrt(input_channels * w * h)
         initial = tf.random_uniform(shape, minval=-d, maxval=d)
         return tf.Variable(initial)
+        # initial = tf.truncated_normal(shape, stddev=0.01)
+        # return tf.Variable(initial)
 
     def _conv_bias_variable(self, shape, w, h, input_channels):
         d = 1.0 / np.sqrt(input_channels * w * h)
         initial = tf.random_uniform(shape, minval=-d, maxval=d)
         return tf.Variable(initial)
+        # initial = tf.constant(0.01, shape=shape)
+        # return tf.Variable(initial)
 
     def _conv2d(self, x, W, stride):
         return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding="VALID")
+        # return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding='SAME')
 
 # Actor-Critic FF Network
 

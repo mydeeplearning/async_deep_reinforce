@@ -56,12 +56,13 @@ training_threads = []
 
 learning_rate_input = tf.placeholder("float")
 
-grad_applier = RMSPropApplier(learning_rate=learning_rate_input,
-                              decay=RMSP_ALPHA,
-                              momentum=0.0,
-                              epsilon=RMSP_EPSILON,
-                              clip_norm=GRAD_NORM_CLIP,
-                              device=device)
+# grad_applier = RMSPropApplier(learning_rate=learning_rate_input,
+#                               decay=RMSP_ALPHA,
+#                               momentum=0.0,
+#                               epsilon=RMSP_EPSILON,
+#                               clip_norm=GRAD_NORM_CLIP,
+#                               device=device)
+grad_applier = tf.train.RMSPropOptimizer(learning_rate_input, RMSP_ALPHA, 0.0, 1e-10)
 
 for i in range(PARALLEL_SIZE):
     training_thread = A3CTrainingThread(i, global_network, initial_learning_rate,
