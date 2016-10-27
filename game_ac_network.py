@@ -72,12 +72,12 @@ class GameACNetwork(object):
     # weight initialization based on muupan's code
     # https://github.com/muupan/async-rl/blob/master/a3c_ale.py
     def _fc_weight_variable(self, shape):
-        input_channels = shape[0]
-        d = 1.0 / np.sqrt(input_channels)
-        initial = tf.random_uniform(shape, minval=-d, maxval=d)
-        return tf.Variable(initial)
-        # initial = tf.truncated_normal(shape, stddev=0.01)
+        # input_channels = shape[0]
+        # d = 1.0 / np.sqrt(input_channels)
+        # initial = tf.random_uniform(shape, minval=-d, maxval=d)
         # return tf.Variable(initial)
+        initial = tf.truncated_normal(shape, stddev=0.01)
+        return tf.Variable(initial)
 
     def _fc_bias_variable(self, shape, input_channels):
         # d = 1.0 / np.sqrt(input_channels)
