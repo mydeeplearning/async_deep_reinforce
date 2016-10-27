@@ -63,12 +63,11 @@ class GameACNetwork(object):
         sync_ops = []
 
         with tf.device(self._device):
-            with tf.op_scope([], name, "GameACNetwork") as name:
+            with tf.name_scope(name, "GameACNetwork") as scope:
                 for(src_var, dst_var) in zip(src_vars, dst_vars):
                     sync_op = tf.assign(dst_var, src_var)
                     sync_ops.append(sync_op)
-
-                return tf.group(*sync_ops, name=name)
+                return tf.group(*sync_ops, name=scope)
 
     # weight initialization based on muupan's code
     # https://github.com/muupan/async-rl/blob/master/a3c_ale.py

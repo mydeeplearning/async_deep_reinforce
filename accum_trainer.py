@@ -44,20 +44,20 @@ class AccumTrainer(object):
         with tf.device(self._device):
             accumulate_ops = []
 
-            with tf.op_scope([], name, self._name) as name:
+            with tf.name_scope(name, self._name) as scope:
                 for var, grad, accum_grad in zip(self._var_list, self._grad_list, self._accum_grad_list):
                     with tf.name_scope("accum_" + var.op.name):
                         accumulate_ops.append(tf.assign_add(accum_grad, grad))
-                return tf.group(*accumulate_ops, name=name)
+                return tf.group(*accumulate_ops, name=scope)
 
     def reset_gradients(self, name=None):
         with tf.device(self._device):
             reset_ops = []
 
-            with tf.op_scope([], name, self._name) as name:
+            with tf.name_scope(name, self._name) as scope:
                 for var, accum_grad in zip(self._var_list, self._accum_grad_list):
                     with tf.name_scope("reset_" + var.op.name):
                         zero = tf.zeros(accum_grad.get_shape())
                         reset = accum_grad.assign(zero)
                         reset_ops.append(reset)
-                return tf.group(*reset_ops, name=name)
+                return tf.group(*reset_ops, name=scope)

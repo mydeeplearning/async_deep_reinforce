@@ -97,10 +97,10 @@ class RMSPropApplier(object):
             with tf.control_dependencies(None):
                 self._create_slots(var_list)
 
-            with tf.op_scope([], name, self._name) as name:
+            with tf.name_scope(name, self._name) as scope:
                 self._prepare()
                 for var, accum_grad in zip(var_list, accum_grad_list):
                     with tf.name_scope("update_" + var.op.name), tf.device(var.device):
                         clipped_accum_grad = tf.clip_by_norm(accum_grad, self._clip_norm)
                         update_ops.append(self._apply_dense(clipped_accum_grad, var))
-                return tf.group(*update_ops, name=name)
+                return tf.group(*update_ops, name=scope)
