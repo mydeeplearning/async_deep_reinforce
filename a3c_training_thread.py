@@ -50,11 +50,11 @@ class A3CTrainingThread(object):
         self.accum_gradients = self.trainer.accumulate_gradients()
         self.reset_gradients = self.trainer.reset_gradients()
 
-        # self.apply_gradients = grad_applier.apply_gradients(
-        #     global_network.get_vars(),
-        #     self.trainer.get_accum_grad_list())
         self.apply_gradients = grad_applier.apply_gradients(
-            zip(self.trainer.get_accum_grad_list(), global_network.get_vars()))
+            global_network.get_vars(),
+            self.trainer.get_accum_grad_list())
+        # self.apply_gradients = grad_applier.apply_gradients(
+        #     zip(self.trainer.get_accum_grad_list(), global_network.get_vars()))
 
         self.sync = self.local_network.sync_from(global_network)
 
