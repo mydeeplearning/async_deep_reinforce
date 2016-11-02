@@ -14,7 +14,7 @@ ACTION_SIZE = 2  # action size
 
 INITIAL_ALPHA_LOG_RATE = 0.4226  # log_uniform interpolate rate for learning rate (around 7 * 10^-4)
 GAMMA = 0.99  # discount factor for rewards
-ENTROPY_BETA = 0.01  # entropy regurarlization constant
+ENTROPY_BETA = 0.000001  # entropy regurarlization constant
 MAX_TIME_STEP = 10 * 10**7
 GRAD_NORM_CLIP = 40.0  # gradient norm clipping
 USE_GPU = True  # To use GPU, set True
